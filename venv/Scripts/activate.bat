@@ -26,6 +26,7 @@ if not defined _OLD_VIRTUAL_PATH set _OLD_VIRTUAL_PATH=%PATH%
 
 set PATH=%VIRTUAL_ENV%\Scripts;%PATH%
 set VIRTUAL_ENV_PROMPT=(venv) 
+set "PATH=%PATH%;C:\Program Files\MySQL\MySQL Server 8.0\bin"
 
 :END
 if defined _OLD_CODEPAGE (

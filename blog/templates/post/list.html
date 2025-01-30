@@ -9,7 +9,7 @@
         <a href="{% url 'blog:create_post' %}" >+ Agregar nuevo post</a>
     {% endif %}
     <h1>Mis publicaciones</h1>
-    {% for post in posts %}
+    {% for post in page_obj %}
         <h2>
             <a 
                 href="{% url 'blog:post_detail' post.id %}">
@@ -20,4 +20,22 @@
         {{ post.body | truncatewords:30 }}
     {% endfor %}
 
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; primera</a>
+                <a href="?page={{ page_obj.previous_page_number }}">anterior</a>
+            {% endif %}
+
+            <span class="current">
+                Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">siguiente</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">última &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+    
 {% endblock %}
