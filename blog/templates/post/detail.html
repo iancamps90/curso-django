@@ -1,9 +1,29 @@
+<!-- post/detail.html -->
 {% extends "base.html" %}
 
-{% block title %} {{ post.title }} {% endblock %}
+{% block title %}{{ post.title }}{% endblock %}
 
 {% block content %}
     <h1>{{ post.title }}</h1>
-    {{ post.body }}
-    <a href={% url 'blog:post_list' %}>Regresar</a>
+    <p>{{ post.body }}</p>
+
+    <h2>Comentarios</h2>
+    {% for comment in comments %}
+        <div>
+            <strong>{{ comment.author }}</strong>
+            <p>{{ comment.body }}</p>
+            <p>{{ comment.created }}</p>
+        </div>
+    {% endfor %}
+
+    <h2>Agregar un comentario</h2>
+    {% if new_comment %}
+        <p>Tu comentario ha sido agregado.</p>
+    {% else %}
+        <form method="post">
+            {{ comment_form.as_p }}
+            {% csrf_token %}
+            <button type="submit">Agregar comentario</button>
+        </form>
+    {% endif %}
 {% endblock %}

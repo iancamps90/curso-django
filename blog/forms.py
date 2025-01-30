@@ -1,5 +1,7 @@
+# blog/forms.py
 from django import forms
-from .models import Post
+from .models import Post, Comment, Category
+
 
 class PostForm(forms.ModelForm):
     title = forms.CharField(label='Titulo para el post', max_length=250)
@@ -8,4 +10,9 @@ class PostForm(forms.ModelForm):
     
     class Meta:
         model = Post
-        fields = ['title', 'body', 'published']
+        fields = ['title', 'slug', 'body', 'published', 'author', 'categories']
+        
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ('author', 'body')
