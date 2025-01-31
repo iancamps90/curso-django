@@ -40,10 +40,12 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    'rest_framework_simplejwt',
     'drf_spectacular',
     'drf_spectacular_sidecar',  # Opcional (añade estilos y soporte para Swagger UI)
     'api',
     'blog',
+    'faker',
 ]
 
 MIDDLEWARE = [
@@ -133,16 +135,46 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-LOGIN_REDIRECT_URL = 'blog:create_post'
+LOGIN_REDIRECT_URL = 'blog:post_list'
 LOGIN_URL = 'login'
 LOGOUT_REDIRECT_URL = 'login'  # O cualquier URL a la que quieras redirigir después del logout
 
 REST_FRAMEWORK = {
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',   # Usuarios anónimos
+        'rest_framework.throttling.UserRateThrottle',   # Usuarios autenticados
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '5/minute',   # Máximo 5 requests por minuto para usuarios sin autenticación
+        'user': '50/minute',  # Máximo 50 requests por minuto para usuarios autenticados
+    },
+    'DEFAULT_THROTTLE_RATES': {
+        'user': '120/day',  # 100 peticiones por usuario al día
+        'anon': '20/day',   # 10 peticiones al día para usuarios anónimos
+    },
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication', # Autenticación con JWT
+    ),
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',  # Todos los endpoints requieren autenticación
+    ],
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 5  # Número de posts por página
 }
 
+# Configuración de SimpleJWT
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),  # Token expira en 1 hora
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),  # Token de refresco en 7 días
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True,
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': 'tu_clave_secreta_super_segura',  # Cambia esto por una clave segura
+    'AUTH_HEADER_TYPES': ('Bearer',),
+}
 
 SPECTACULAR_SETTINGS = {
     'TITLE' : 'Blog API',
