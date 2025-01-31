@@ -1,3 +1,4 @@
+<!-- BLOG/TEMPLATES/BASE.HTML -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,11 +20,16 @@
     {% if request.user.is_authenticated %}
         Bienvenido {{ request.user.first_name | default:request.user.username }},
     {% endif %}
+
     <a href="{% url 'login' %}">Iniciar sesión</a>
+
     <form method="post" action="{% url 'logout' %}" style="display:inline;">
         {% csrf_token %}
         <button type="submit">Cerrar sesión</button>
     </form>
+
+    <a href="{% url 'blog:post_list' %}">Ver todos los posts</a>
+
     {% block content %}
     {% endblock %}
     
