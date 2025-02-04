@@ -2,19 +2,29 @@
 from django import forms
 from django.contrib.auth.models import User
 from .models import Post, Comment, Category
-from django.utils.text import slugify
 from django.core.exceptions import ValidationError
+from django.utils.text import slugify
 
 
 
 # FORMULARIO REGISTRO USUARIO
 class UserRegistrationForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput)
-    password2 = forms.CharField(label="Confirmar contraseña", widget=forms.PasswordInput)
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Introduce tu contraseña'}),
+        label="Contraseña"
+    )
+    password2 = forms.CharField(
+        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Repite tu contraseña'}),
+        label="Confirmar contraseña"
+    )
 
     class Meta:
         model = User
         fields = ['username', 'email', 'password']
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre de usuario'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Correo electrónico'}),
+        }
 
     def clean_password2(self):
         """ Verifica que las contraseñas coincidan """
@@ -33,24 +43,36 @@ class PostForm(forms.ModelForm):
         max_length=250,
         min_length=5,
         required=True,
-        widget=forms.TextInput(attrs={'placeholder': 'Introduce un título válido'})
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',  # Agregar Bootstrap
+            'placeholder': 'Introduce un título válido'
+        })
     )
 
     body = forms.CharField(
         label='Contenido',
         required=True,
         min_length=20,
-        widget=forms.Textarea(attrs={'placeholder': 'Escribe el contenido aquí...', 'rows': 5})
+        widget=forms.Textarea(attrs={
+            'class': 'form-control',  # Agregar Bootstrap
+            'placeholder': 'Escribe el contenido aquí...',
+            'rows': 5
+        })
     )
     
     published = forms.BooleanField(
         label="¿Publicar?",
         required=False,  # Evita errores si el usuario lo deja vacío
+        widget=forms.CheckboxInput(attrs={'class': 'form-check-input'})
     )
     
     class Meta:
         model = Post
         fields = ['title', 'slug', 'body', 'published', 'categories']
+        widgets = {
+            'slug': forms.TextInput(attrs={'class': 'form-control'}),
+            'categories': forms.SelectMultiple(attrs={'class': 'form-select'}),
+        }
         
         
     def clean_title(self):

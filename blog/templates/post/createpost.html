@@ -1,18 +1,54 @@
+<!-- blog/templates/post/createpost.html -->
 {% extends "base.html" %}
 
-{% block title %} Crear post {% endblock %}
+{% block title %} Crear Nuevo Post {% endblock %}
 
 {% block content %}
-    {% if new_post %}
-        <h1>¡Nuevo post creado!</h1>
-        Ingresa al nuevo post de <a href="{% url 'blog:post_detail' new_post.id %}">{{ new_post.title }}</a>
+<div class="container mt-3">
 
-    {% else %}
-        <h1>Crear nuevo post</h1>
-        <form action="" method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="Crear una publicación">
-        </form>
-    {% endif %}
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow p-4">
+                {% if new_post %}
+                    <div class="alert alert-success text-center">
+                        <h2 class="mb-3">¡Nuevo post creado!</h2>
+                        <p>Tu post ha sido publicado con éxito.</p>
+                        <a href="{% url 'blog:post_detail' new_post.id %}" class="btn btn-primary">Ver post</a>
+                        <a href="{% url 'blog:post_list' %}" class="btn btn-outline-secondary mt-3">Volver a la lista</a>
+                    </div>
+                {% else %}
+                    <h2 class="mb-4">Crear nuevo post</h2>
+                    <form method="post" class="needs-validation" novalidate>
+                        {% csrf_token %}
+                        {{ form.as_p }}  {# El formulario ya tiene Bootstrap en forms.py #}
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-success">Publicar</button>
+                            <a href="{% url 'blog:post_list' %}" class="btn btn-secondary">Cancelar</a>
+                        </div>
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    // Validación de Bootstrap
+    (function() {
+        'use strict';
+        window.addEventListener('load', function() {
+            var forms = document.getElementsByClassName('needs-validation');
+            var validation = Array.prototype.filter.call(forms, function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
 {% endblock %}
