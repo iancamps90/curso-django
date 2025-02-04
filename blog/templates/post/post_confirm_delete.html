@@ -1,12 +1,30 @@
-<!-- blog/templates/blog/post_confirm_delete.html -->
+<!-- blog/templates/post/post_confirm_delete.html -->
 {% extends "base.html" %}
 
+{% block title %} Eliminar Post {% endblock %}
+
+
+
 {% block content %}
-    <h2>¿Estás seguro de que deseas eliminar este post?</h2>
-    <p><strong>{{ post.title }}</strong></p>
-    <form method="post">
-        {% csrf_token %}
-        <button type="submit">Eliminar</button>
-        <a href="{% url 'blog:post_list' %}">Cancelar</a>
-    </form>
+<div class="container mt-3">
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm p-4 text-center">
+                <h2 class="mb-4 text-danger fw-bold">
+                    <i class="bi bi-exclamation-triangle-fill"></i> ¿Estás seguro de que deseas eliminar este post?
+                </h2>
+                <p class="fw-bold text-muted">"{{ post.title }}"</p>
+                <p class="text-muted">Esta acción no se puede deshacer.</p>
+
+                <form method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger w-100 mb-2">Eliminar definitivamente</button>
+                </form>
+
+                <a href="{% url 'blog:post_list' %}" class="btn btn-secondary w-100">Cancelar</a>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

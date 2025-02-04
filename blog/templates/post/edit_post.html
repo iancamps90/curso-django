@@ -1,11 +1,40 @@
-<!-- blog/templates/blog/edit_post.html -->
+<!-- blog/templates/post/edit_post.html -->
 {% extends "base.html" %}
 
+{% block title %}Editar Post{% endblock %}
+
 {% block content %}
-    <h2>Editar post: {{ post.title }}</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Guardar cambios</button>
-    </form>
+<div class="container mt-3">
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm p-4">
+                <h2 class="mb-4 text-center">Editar Post</h2>
+                <form method="post" class="needs-validation" novalidate>
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label for="id_title" class="form-label">Título</label>
+                        {{ form.title }}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="id_body" class="form-label">Contenido</label>
+                        {{ form.body }}
+                    </div>
+                    
+                    <div class="mb-3 form-check">
+                        {{ form.published }}
+                        <label class="form-check-label" for="id_published">Publicar</label>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                        <a href="{% url 'blog:post_list' %}" class="btn btn-secondary">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

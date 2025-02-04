@@ -1,0 +1,206 @@
+/* static\css\styles.css*/
+/* Estilos personalizados */
+/* 🔹 Reset global */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 🔹 Asegurar que el footer quede siempre abajo */
+html,
+body {
+    height: 100%;
+}
+
+.main-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    /* Asegura que el contenido ocupe toda la pantalla */
+}
+
+.content {
+    flex: 1;
+    /* Hace que el contenido crezca para empujar el footer hacia abajo */
+}
+
+body {
+    padding-top: 80px !important;
+    background-color: #f8f9fa;
+    font-family: 'Poppins', sans-serif;
+}
+/* Estilizar la navbar */
+.navbar {
+    height: 60px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #343a40;
+}
+
+
+/* Ajustes en los mensajes de Django */
+.alert {
+    margin-top: 10px;
+}
+
+
+/* 🔹 Estilos para el footer */
+.footer {
+    background-color: #343a40;
+    color: white;
+    padding: 15px 0;
+    text-align: center;
+    margin-top: auto;
+    /* Asegura que el footer se mantenga abajo */
+    width: 100%;
+}
+/* 🔹 footer Hace que en pantallas pequeñas se divida mejor */
+@media (max-width: 768px) {
+    .footer .row {
+        flex-direction: column;
+    }
+
+    .footer .col-md-4 {
+        margin-bottom: 15px;
+    }
+}
+
+.btn-animated {
+    transition: transform 0.2s;
+}
+
+.btn-animated:hover {
+    transform: scale(1.05);
+}
+
+/* Animación para botones */
+.btn {
+    transition: all 0.2s ease-in-out, background-color 0.3s;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+}
+
+/* 🔹 Transición de color en enlaces */
+a {
+    transition: color 0.3s ease-in-out, opacity 0.3s;
+}
+
+a:hover {
+    color: #0d6efd;
+    /* Azul de Bootstrap */
+    opacity: 0.8;
+}
+
+/* Efecto suave en la Navbar */
+.navbar {
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease-in-out;
+}
+
+.navbar:hover {
+    background-color: #222;
+}
+
+/* 🔹 Efecto Fade-In al cargar la página */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 🔹 Avatar redondeado en comentarios */
+img.rounded-circle {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+}
+
+@keyframes fadeInAnimation {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 🔹 Efecto de sombra en tarjetas */
+.card {
+    transition: all 0.3s ease-in-out;
+}
+
+.card:hover {
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.15);
+    transform: translateY(-5px);
+}
+
+
+/* 🔹 Botón flotante "Volver arriba" */
+.btn-volver-arriba {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: none;
+    /* Oculto por defecto */
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 24px;
+    line-height: 42px;
+    z-index: 1000;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+/* Efecto de aparición */
+.btn-volver-arriba:hover {
+    transform: scale(1.1);
+}
+
+
+/* 🌙 Modo Oscuro */
+.dark-mode {
+    background-color: #121212 !important;
+    color: #ffffff !important;
+}
+
+.dark-mode .navbar {
+    background-color: #222 !important;
+}
+
+.dark-mode .footer {
+    background-color: #181818 !important;
+}
+
+.dark-mode .card {
+    background-color: #1e1e1e !important;
+    color: white !important;
+}
+
+.dark-mode a {
+    color: #ffffff !important;
+}
+
+.dark-mode .btn {
+    background-color: #333 !important;
+    color: white !important;
+}
+
+.dark-mode .btn:hover {
+    background-color: #555 !important;
+}
